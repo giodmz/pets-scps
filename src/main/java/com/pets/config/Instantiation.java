@@ -27,15 +27,15 @@ public class Instantiation implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        petRepository.deleteAll();
-
-        Pet rodolfo = Pet.builder().name("Rodolfo")
-                .gender(Gender.MALE)
-                .age(5).weight(5.3)
-                .race("Dobberman")
-                .address("rua")
-                .build();
-        petRepository.save(rodolfo);
+//        petRepository.deleteAll();
+//
+//        Pet rodolfo = Pet.builder().name("Rodolfo")
+//                .gender(Gender.MALE)
+//                .age(5).weight(5.3)
+//                .race("Dobberman")
+//                .address("rua")
+//                .build();
+//        petRepository.save(rodolfo);
     }
 
 }
