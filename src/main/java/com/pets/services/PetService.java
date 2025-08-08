@@ -23,6 +23,9 @@ public class PetService {
         return rep.findById(id).orElseThrow(ObjectCollectedException::new);
     }
 
+    public List<Pet> findByNameLike(String name){
+        return  rep.findByNameLike(name);
+    }
 
     public void insert(Pet obj) {
         rep.save(obj);

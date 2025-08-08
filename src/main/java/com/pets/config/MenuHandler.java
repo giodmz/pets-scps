@@ -54,7 +54,7 @@ public class MenuHandler {
                     listAllPetsMenu();
                     break;
                 case 5:
-//                    menuBuscarDados();
+                    findDataMenu();
                     break;
                 case 6:
                     System.out.println("\nAté logo...");
@@ -71,7 +71,7 @@ public class MenuHandler {
             System.out.println("\nFormato inválido, utilize apenas números para navegar.");
             mainMenu();
         } catch (InputException ex) {
-            System.out.println("\nErro: " + ex.getMessage());
+            System.out.println("\nError: " + ex.getMessage());
             mainMenu();
         }
 
@@ -166,6 +166,7 @@ public class MenuHandler {
         try {
             List<Pet> pets = service.findAll();
 
+            System.out.println("Pets found on database: ");
             for (Pet pet : pets) {
                 System.out.println(pet.toString());
             }
@@ -177,6 +178,28 @@ public class MenuHandler {
 
         returnToMainMenu();
 
+    }
+
+    public  void modifyPetDataMenu() {
+
+    }
+
+    public void findDataMenu() {
+        try {
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Insert your pet name: ");
+            String name = sc.nextLine();
+            List<Pet> pets = service.findByNameLike(name);
+
+            System.out.println("Pets with that name found on database: ");
+            for (Pet pet : pets) {
+                System.out.println(pet.toString());
+            }
+
+        } catch (ObjectNotFoundException ex){
+            ex.getMessage();
+        }
     }
 
     public void returnToMainMenu() {
