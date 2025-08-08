@@ -1,4 +1,4 @@
-package com.pets.config;
+package com.pets.services.exceptions;
 
 public class InputException extends RuntimeException {
     public InputException(String msg){
