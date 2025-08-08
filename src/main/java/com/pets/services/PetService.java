@@ -20,6 +20,7 @@ public class PetService {
     }
 
     public Pet findById(Integer id){
+        requiredValidId(id);
         return rep.findById(id).orElseThrow(ObjectCollectedException::new);
     }
 
@@ -32,11 +33,13 @@ public class PetService {
     }
 
     public void delete(Integer id){
+        requiredValidId(id);
         rep.findById(id).orElseThrow(ObjectCollectedException::new);
         rep.deleteById(id);
     }
 
     public Pet update(Pet obj) {
+        requiredValidId(obj.getId());
         Pet newObj = rep.findById(obj.getId()).orElseThrow(ObjectCollectedException::new);
         updateData(newObj, obj);
         return rep.save(newObj);
@@ -48,6 +51,12 @@ public class PetService {
         newObj.setSpecies(obj.getSpecies());
         newObj.setWeight(obj.getWeight());
         newObj.setAddress(obj.getAddress());
+    }
+
+    private static void requiredValidId(Integer id){
+        if (id <= 0){
+            throw new IllegalArgumentException("Invalid id");
+        }
     }
 
 }

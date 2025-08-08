@@ -26,26 +26,27 @@ public class MenuHandler {
     @Autowired
     private PetService service;
 
+    Scanner sc = new Scanner(System.in);
+
     public void mainMenu() {
 
         Locale.setDefault(Locale.US);
-        Scanner sc = new Scanner(System.in);
 
         try {
-            System.out.println("\n1 - Cadastrar novo pet");
-            System.out.println("2 - Alterar dados do pet cadastrado");
-            System.out.println("3 - Deletar um pet cadastrado");
-            System.out.println("4 - Listar todos os pets cadastrados");
-            System.out.println("5 - Listar pets por algum critério");
-            System.out.println("6 - Sair");
-            Integer input = sc.nextInt();
+            System.out.println("\n1 - Register a new pet");
+            System.out.println("2 - Change pet data");
+            System.out.println("3 - Delete a pet from database");
+            System.out.println("4 - List all registered pets");
+            System.out.println("5 - Find pet by name");
+            System.out.println("6 - Exit");
+            int input = sc.nextInt();
 
             switch (input) {
                 case 1:
                     registerPetMenu();
                     break;
                 case 2:
-//                    alterarDadosPetMenu();
+                    modifyPetDataMenu();
                     break;
                 case 3:
 //                    removerPetMenu();
@@ -54,7 +55,7 @@ public class MenuHandler {
                     listAllPetsMenu();
                     break;
                 case 5:
-                    findDataMenu();
+                    findPetByNameMenu();
                     break;
                 case 6:
                     System.out.println("\nAté logo...");
@@ -64,25 +65,23 @@ public class MenuHandler {
             }
 
             if (input <= 0) {
-                throw new InputException("Por insira um número válido.");
+                throw new InputException("Please insert a valid number.");
             }
 
         } catch (InputMismatchException ex) {
-            System.out.println("\nFormato inválido, utilize apenas números para navegar.");
+            System.out.println("\nInvalid format, please use only numbers to navigate.");
             mainMenu();
         } catch (InputException ex) {
             System.out.println("\nError: " + ex.getMessage());
             mainMenu();
         }
 
-        sc.close();
-
     }
 
 
     public void registerPetMenu() {
         try {
-            Scanner sc = new Scanner(System.in);
+
             System.out.println("Please, insert the pet data:");
             System.out.println("Name:");
             String name = sc.nextLine();
@@ -130,11 +129,11 @@ public class MenuHandler {
 
 
             if (age >= 22) {
-                throw new InputException("Please, insert a valid age");
+                throw new InputException("Please, insert a valid age (under 22)");
             }
 
             if (!inputSpecies.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
-                throw new InputException("O name não pode conter números ou caracteres especiais.");
+                throw new InputException("The name can't contain numbers or special characters");
             }
 
             Species specie = Species.valueOf(inputSpecies.toUpperCase());
@@ -152,7 +151,6 @@ public class MenuHandler {
 
             System.out.println("Your pet is successful registered: " + pet.toString());
 
-            sc.close();
 
         } catch (InputException ex) {
             ex.getMessage();
@@ -168,6 +166,7 @@ public class MenuHandler {
 
             System.out.println("Pets found on database: ");
             for (Pet pet : pets) {
+
                 System.out.println(pet.toString());
             }
 
@@ -180,37 +179,110 @@ public class MenuHandler {
 
     }
 
-    public  void modifyPetDataMenu() {
-
+    public void findPetByNameMenu() {
+        findPetByName();
     }
 
-    public void findDataMenu() {
+    public  void modifyPetDataMenu() {
+        findPetByName();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Insert the pet ID you want to change data: ");
+        Integer id = sc.nextInt();
+        sc.nextLine();
+
+        Pet pet = service.findById(id);
+        if (pet == null) {
+            System.out.println("Pet not found!");
+            return;
+        }
+
+        System.out.println("\nWhat do you want to change?");
+        System.out.println("1 - Name");
+        System.out.println("2 - Age");
+        System.out.println("3 - Weight");
+        System.out.println("4 - Address");
+        System.out.println("0 - Exit");
+
+        int input = sc.nextInt();
+        sc.nextLine();
+
+        switch (input) {
+            case 1:
+                System.out.print("New name: ");
+                String name = sc.nextLine();
+                pet.setName(name);
+                break;
+            case 2:
+                System.out.print("New age: ");
+                int age = sc.nextInt();
+                pet.setAge(age);
+                break;
+            case 3:
+                System.out.print("New weight: ");
+                double weight = sc.nextDouble();
+                pet.setWeight(weight);
+                break;
+            case 4:
+                System.out.print("New city: ");
+                String city = sc.nextLine();
+                System.out.print("New street: ");
+                String street = sc.nextLine();
+                System.out.print("New number: ");
+                int num = sc.nextInt();
+                Address newAddress = Address.builder()
+                        .city(city)
+                        .street(street)
+                        .num(num)
+                        .build();
+                addressRepository.save(newAddress);
+                pet.setAddress(newAddress);
+                break;
+            case 0:
+                System.out.println("Exiting...");
+                return;
+            default:
+                System.out.println("Invalid option!");
+                return;
+        }
+
+        service.update(pet);
+        System.out.println("Pet data updated successfully.");
+
+        returnToMainMenu();
+    }
+
+    public void findPetByName() {
         try {
             Scanner sc = new Scanner(System.in);
 
             System.out.println("Insert your pet name: ");
             String name = sc.nextLine();
             List<Pet> pets = service.findByNameLike(name);
-
-            System.out.println("Pets with that name found on database: ");
+            if (pets.isEmpty()) {
+                System.out.println("\nNo data found on database");
+                returnToMainMenu();
+            }
+            System.out.println("\nPets with that name found on database: ");
             for (Pet pet : pets) {
                 System.out.println(pet.toString());
             }
 
+
         } catch (ObjectNotFoundException ex){
             ex.getMessage();
         }
+
     }
 
     public void returnToMainMenu() {
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("\nDo you want to return to main menu? (y/n)");
         String input = sc.next();
         if (Objects.equals(input, "y")) {
             mainMenu();
         } else {
             System.out.println("See u... :)");
+            sc.close();
             System.exit(0);
         }
 
