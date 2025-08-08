@@ -14,9 +14,9 @@ public class PetService {
     @Autowired
     private PetRepository rep;
 
-
     public List<Pet> findAll() {
         return rep.findAll();
+
     }
 
     public Pet findById(Integer id){
@@ -24,8 +24,8 @@ public class PetService {
     }
 
 
-    public Pet insert(Pet obj) {
-        return rep.save(obj);
+    public void insert(Pet obj) {
+        rep.save(obj);
     }
 
     public void delete(Integer id){

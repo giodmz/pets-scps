@@ -6,13 +6,13 @@ import com.pets.enums.Gender;
 import com.pets.enums.Species;
 import com.pets.repository.AddressRepository;
 import com.pets.repository.PetRepository;
+import com.pets.services.PetService;
 import com.pets.services.exceptions.InputException;
+import com.pets.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.InputMismatchException;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 @Component
 public class MenuHandler {
@@ -22,6 +22,9 @@ public class MenuHandler {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private PetService service;
 
     public void mainMenu() {
 
@@ -48,7 +51,7 @@ public class MenuHandler {
 //                    removerPetMenu();
                     break;
                 case 4:
-//                    menuListarPets();
+                    listAllPetsMenu();
                     break;
                 case 5:
 //                    menuBuscarDados();
@@ -78,13 +81,12 @@ public class MenuHandler {
 
 
     public void registerPetMenu() {
-
         try {
-
             Scanner sc = new Scanner(System.in);
             System.out.println("Please, insert the pet data:");
             System.out.println("Name:");
             String name = sc.nextLine();
+
             if (name.isEmpty()) {
                 name = "NO_INFO";
             }
@@ -146,7 +148,7 @@ public class MenuHandler {
                     .species(specie)
                     .address(address)
                     .build();
-            petRepository.save(pet);
+            service.insert(pet);
 
             System.out.println("Your pet is successful registered: " + pet.toString());
 
@@ -154,6 +156,39 @@ public class MenuHandler {
 
         } catch (InputException ex) {
             ex.getMessage();
+        }
+
+        returnToMainMenu();
+
+    }
+
+    public void listAllPetsMenu() {
+        try {
+            List<Pet> pets = service.findAll();
+
+            for (Pet pet : pets) {
+                System.out.println(pet.toString());
+            }
+
+        } catch (ObjectNotFoundException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            mainMenu();
+        }
+
+        returnToMainMenu();
+
+    }
+
+    public void returnToMainMenu() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("\nDo you want to return to main menu? (y/n)");
+        String input = sc.next();
+        if (Objects.equals(input, "y")) {
+            mainMenu();
+        } else {
+            System.out.println("See u... :)");
+            System.exit(0);
         }
 
     }

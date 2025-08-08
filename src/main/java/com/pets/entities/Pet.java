@@ -28,4 +28,31 @@ public class Pet {
     @ManyToOne
     Address address;
 
+    @Override
+    public String toString() {
+        return String.format(
+                "ID: %d | Name: %s | Gender: %s | Age: %d | Weight: %.2f kg | Species: %s | Address: %s",
+                id,
+                name,
+                formatEnum(gender),
+                age,
+                weight,
+                formatEnum(species),
+                formatAddress(address)
+        );
+    }
+
+    private String formatEnum(Enum<?> e) {
+        return e != null ? e.name().toLowerCase() : "unknown";
+    }
+
+    private String formatAddress(Address address) {
+        if (address == null) return "No address";
+
+        return String.format("%s, %s - %s",
+                address.getStreet(),
+                address.getNum(),
+                address.getCity()
+        );
+    }
 }
