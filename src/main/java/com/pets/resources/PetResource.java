@@ -20,6 +20,7 @@ public class PetResource {
     @Autowired
     private PetService service;
 
+    @GetMapping
     public ResponseEntity<List<PetDTO>> findAll() {
         List<Pet> list = service.findAll();
         // Pet -> PetDTO
