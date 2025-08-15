@@ -1,6 +1,9 @@
 package com.pets.services;
 
+import com.pets.dto.PetDTO;
 import com.pets.entities.Pet;
+import com.pets.enums.Gender;
+import com.pets.enums.Species;
 import com.pets.repository.PetRepository;
 import com.sun.jdi.ObjectCollectedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,6 @@ public class PetService {
 
     public List<Pet> findAll() {
         return rep.findAll();
-
     }
 
     public Pet findById(Integer id){
@@ -51,6 +53,16 @@ public class PetService {
         newObj.setSpecies(obj.getSpecies());
         newObj.setWeight(obj.getWeight());
         newObj.setAddress(obj.getAddress());
+    }
+
+    public Pet fromDTO (PetDTO objDto) {
+        return new Pet(objDto.getId(),
+                objDto.getName(),
+                objDto.getGender(),
+                objDto.getAge(),
+                objDto.getWeight(),
+                objDto.getSpecies(),
+                objDto.getAddress());
     }
 
     private static void requiredValidId(Integer id){

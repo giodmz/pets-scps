@@ -3,7 +3,7 @@ package com.pets.resources.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-// tratar erro no endpoint, removendo caracteres especiais da busca
+// removing special characters (searching)
 public class URL {
     public static String decodeParam(String text) {
         try {
