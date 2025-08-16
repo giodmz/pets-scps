@@ -5,6 +5,7 @@ import com.pets.entities.Pet;
 import com.pets.enums.Gender;
 import com.pets.enums.Species;
 import com.pets.repository.PetRepository;
+import com.pets.services.exceptions.ObjectNotFoundException;
 import com.sun.jdi.ObjectCollectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,7 @@ public class PetService {
                 objDto.getAddress());
     }
 
-    private static void requiredValidId(Integer id){
+    private void requiredValidId(Integer id){
         if (id <= 0){
             throw new IllegalArgumentException("Invalid id");
         }

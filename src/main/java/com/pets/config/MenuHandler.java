@@ -49,7 +49,7 @@ public class MenuHandler {
                     modifyPetDataMenu();
                     break;
                 case 3:
-//                    removerPetMenu();
+                    deletePetMenu();
                     break;
                 case 4:
                     listAllPetsMenu();
@@ -176,6 +176,40 @@ public class MenuHandler {
         }
 
         returnToMainMenu();
+
+    }
+
+    public  void deletePetMenu(){
+        findPetByName();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Insert the pet ID you want to delete from database: ");
+        Integer id = sc.nextInt();
+        sc.nextLine();
+
+
+        Pet pet = service.findById(id);
+        if (pet == null) {
+            System.out.println("Pet not found!");
+            return;
+        }
+
+        System.out.println("Type DELETE to confirm that" + pet.getName() + " will be deleted FOREVER");
+        String confirmation = sc.nextLine();
+        if (confirmation.equalsIgnoreCase("DELETE")) {
+            try {
+            service.delete(id);
+            } catch (ObjectNotFoundException ex) {
+                ex.getMessage();
+                returnToMainMenu();
+            }
+
+            System.out.println("Successfully deleted.");
+            returnToMainMenu();
+        } else {
+            System.out.println("Deleting process canceled. Returning to menu.");
+            returnToMainMenu();
+        }
 
     }
 
