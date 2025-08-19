@@ -1,4 +1,4 @@
-package com.pets.services.exceptions;
+package com.pets.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
     public ObjectNotFoundException(String message) {

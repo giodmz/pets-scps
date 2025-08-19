@@ -6,7 +6,6 @@ import com.pets.enums.Gender;
 import com.pets.enums.Species;
 import com.pets.repository.AddressRepository;
 import com.pets.repository.PetRepository;
-import com.pets.services.exceptions.InputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;

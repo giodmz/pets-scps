@@ -2,10 +2,8 @@ package com.pets.services;
 
 import com.pets.dto.PetDTO;
 import com.pets.entities.Pet;
-import com.pets.enums.Gender;
-import com.pets.enums.Species;
+import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
-import com.pets.services.exceptions.ObjectNotFoundException;
 import com.sun.jdi.ObjectCollectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +20,13 @@ public class PetService {
         return rep.findAll();
     }
 
-    public Pet findById(Integer id){
+    public Pet findById(Integer id) {
         requiredValidId(id);
-        return rep.findById(id).orElseThrow(ObjectCollectedException::new);
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid ID: " + id);
+        }
+        return rep.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Pet not found. (Id: " + id + ")"));
     }
 
     public List<Pet> findByNameLike(String name){

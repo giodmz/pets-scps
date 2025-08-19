@@ -7,8 +7,8 @@ import com.pets.enums.Species;
 import com.pets.repository.AddressRepository;
 import com.pets.repository.PetRepository;
 import com.pets.services.PetService;
-import com.pets.services.exceptions.InputException;
-import com.pets.services.exceptions.ObjectNotFoundException;
+import com.pets.exceptions.InputException;
+import com.pets.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -188,13 +188,16 @@ public class MenuHandler {
         sc.nextLine();
 
 
-        Pet pet = service.findById(id);
-        if (pet == null) {
-            System.out.println("Pet not found!");
-            return;
+        try {
+            Pet pet = service.findById(id);
+            System.out.println("Type DELETE to confirm that" + pet.getName() + " will be deleted FOREVER");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid ID");
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
         }
 
-        System.out.println("Type DELETE to confirm that" + pet.getName() + " will be deleted FOREVER");
+
         String confirmation = sc.nextLine();
         if (confirmation.equalsIgnoreCase("DELETE")) {
             try {
@@ -207,7 +210,7 @@ public class MenuHandler {
             System.out.println("Successfully deleted.");
             returnToMainMenu();
         } else {
-            System.out.println("Deleting process canceled. Returning to menu.");
+            System.out.println("Deleting process canceled.");
             returnToMainMenu();
         }
 
