@@ -11,7 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 public class Pet {
 
@@ -25,20 +24,22 @@ public class Pet {
     Double weight;
     Species species;
 
+
     @ManyToOne
-    Address address;
+    @JoinColumn(name = "adopter_id")
+    private Adopter adopter;
 
     @Override
     public String toString() {
         return String.format(
-                "ID: %d | Name: %s | Gender: %s | Age: %d | Weight: %.2f kg | Species: %s | Address: %s",
+                "ID: %d | Name: %s | Gender: %s | Age: %d | Weight: %.2f kg | Species: %s | Adopter: %s",
                 id,
                 name,
                 formatEnum(gender),
                 age,
                 weight,
                 formatEnum(species),
-                formatAddress(address)
+                formatAdopter(adopter)
         );
     }
 
@@ -46,13 +47,13 @@ public class Pet {
         return e != null ? e.name().toLowerCase() : "unknown";
     }
 
-    private String formatAddress(Address address) {
-        if (address == null) return "No address";
+    private String formatAdopter(Adopter adopter) {
+        if (adopter == null) return "No adopter";
 
         return String.format("%s, %s - %s",
-                address.getStreet(),
-                address.getNum(),
-                address.getCity()
+                adopter.getName(),
+                adopter.getEmail(),
+                adopter.getContact()
         );
     }
 }
