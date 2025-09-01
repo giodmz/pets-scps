@@ -55,7 +55,7 @@ public class PetService {
         newObj.setAge(obj.getAge());
         newObj.setSpecies(obj.getSpecies());
         newObj.setWeight(obj.getWeight());
-        newObj.setAddress(obj.getAddress());
+        newObj.setAdopter(obj.getAdopter());
     }
 
     public Pet fromDTO (PetDTO objDto) {
@@ -65,7 +65,7 @@ public class PetService {
                 objDto.getAge(),
                 objDto.getWeight(),
                 objDto.getSpecies(),
-                objDto.getAddress());
+                objDto.getAdopter());
     }
 
     private void requiredValidId(Integer id){

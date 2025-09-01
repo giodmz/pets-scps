@@ -1,6 +1,7 @@
 package com.pets.dto;
 
 import com.pets.entities.Address;
+import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
 import com.pets.enums.Gender;
 import com.pets.enums.Species;
@@ -21,7 +22,7 @@ public class PetDTO implements Serializable {
     Integer age;
     Double weight;
     Species species;
-    Address address;
+    Adopter adopter;
 
     public PetDTO(Pet obj) {
         id = obj.getId();
@@ -30,7 +31,7 @@ public class PetDTO implements Serializable {
         age = obj.getAge();
         weight = obj.getWeight();
         species = obj.getSpecies();
-        address = obj.getAddress();
+        adopter = obj.getAdopter();
     }
 
 }

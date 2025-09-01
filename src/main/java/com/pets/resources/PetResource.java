@@ -2,6 +2,7 @@ package com.pets.resources;
 
 import com.pets.dto.PetDTO;
 import com.pets.entities.Address;
+import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
 import com.pets.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +65,9 @@ public class PetResource {
         return ResponseEntity.noContent().build(); // 204
     }
 
-    @GetMapping("/{id}/addresses")
-    public ResponseEntity<List<Address>> findAddress(@PathVariable Integer id){
+    @GetMapping("/{id}/adopters")
+    public ResponseEntity<List<Adopter>> findAdopter(@PathVariable Integer id){
         Pet obj = service.findById(id);
-        return ResponseEntity.ok().body(Collections.singletonList(obj.getAddress()));
+        return ResponseEntity.ok().body(Collections.singletonList(obj.getAdopter()));
     }
 }
