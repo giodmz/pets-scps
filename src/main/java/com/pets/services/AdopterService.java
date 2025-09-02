@@ -1,12 +1,10 @@
 package com.pets.services;
 
 
-import com.pets.dto.PetDTO;
+import com.pets.dto.AdopterDTO;
 import com.pets.entities.Adopter;
-import com.pets.entities.Pet;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
-import com.pets.repository.PetRepository;
 import com.sun.jdi.ObjectCollectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,15 +55,14 @@ public class AdopterService {
         newObj.setPets(obj.getPets());
     }
 
-//    public Adopter fromDTO (AdopterDTO objDto) {
-//        return new Adopter(objDto.getId(),
-//                objDto.getName(),
-//                objDto.getGender(),
-//                objDto.getAge(),
-//                objDto.getWeight(),
-//                objDto.getSpecies(),
-//                objDto.getAdopter());
-//    }
+    public Adopter fromDTO (AdopterDTO objDto) {
+        return new Adopter(objDto.getId(),
+                objDto.getName(),
+                objDto.getEmail(),
+                objDto.getContact(),
+                objDto.getAddress(),
+                objDto.getPets());
+    }
 
     private void requiredValidId(Integer id){
         if (id <= 0){

@@ -2,6 +2,8 @@ package com.pets.resources;
 
 
 
+import com.pets.dto.AdopterDTO;
+import com.pets.entities.Adopter;
 import com.pets.services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
