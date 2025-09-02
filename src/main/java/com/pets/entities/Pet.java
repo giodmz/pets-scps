@@ -26,7 +26,7 @@ public class Pet {
 
 
     @ManyToOne
-    @JoinColumn(name = "adopter_id")
+    @JoinColumn(name = "adopter_id", nullable = true)
     private Adopter adopter;
 
     @Override

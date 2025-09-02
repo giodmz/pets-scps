@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Adopter {
 
     @Id
@@ -25,8 +26,10 @@ public class Adopter {
     @ManyToOne
     Address address;
 
-    @OneToMany(mappedBy = "adopter", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pet> pets = new ArrayList<>();
+    @OneToMany(mappedBy = "adopter",
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE},
+            orphanRemoval = true)
+    private List<Pet> pets;
 
     @Override
     public String toString() {
@@ -49,5 +52,15 @@ public class Adopter {
                 address.getStreet(),
                 address.getNum()
         );
+    }
+
+    public void addPet(Pet pet) {
+        pets.add(pet);
+        pet.setAdopter(this);
+    }
+
+    public void removePet(Pet pet) {
+        pets.remove(pet);
+        pet.setAdopter(null);
     }
 }

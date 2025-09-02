@@ -3,6 +3,7 @@ package com.pets.resources;
 
 
 import com.pets.dto.AdopterDTO;
+import com.pets.entities.Address;
 import com.pets.entities.Adopter;
 import com.pets.services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +64,10 @@ public class AdopterResource {
         return ResponseEntity.noContent().build(); // 204
     }
 
-    @GetMapping("/{id}/adopters")
-    public ResponseEntity<List<Adopter>> findAdopter(@PathVariable Integer id){
+    @GetMapping("/{id}/addresses")
+    public ResponseEntity<List<Address>> findAdopter(@PathVariable Integer id){
         Adopter obj = service.findById(id);
-        return ResponseEntity.ok().body(Collections.singletonList(obj.getAdopter()));
+        return ResponseEntity.ok().body(Collections.singletonList(obj.getAddress()));
     }
+
 }

@@ -1,7 +1,6 @@
 package com.pets.resources;
 
 import com.pets.dto.PetDTO;
-import com.pets.entities.Address;
 import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
 import com.pets.services.PetService;
