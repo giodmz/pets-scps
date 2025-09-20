@@ -16,8 +16,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RestController
 @RequestMapping(value="/adopters")
 public class AdopterResource {
+
     @Autowired
     private AdopterService service;
 

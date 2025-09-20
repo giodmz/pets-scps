@@ -1,7 +1,9 @@
 package com.pets.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pets.enums.Gender;
 import com.pets.enums.Species;
+import com.pets.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,10 +25,12 @@ public class Pet {
     Integer age;
     Double weight;
     Species species;
+    Status status;
 
 
     @ManyToOne
     @JoinColumn(name = "adopter_id", nullable = true)
+    @JsonIgnore
     private Adopter adopter;
 
     @Override

@@ -5,6 +5,7 @@ import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
 import com.pets.enums.Gender;
 import com.pets.enums.Species;
+import com.pets.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class PetDTO implements Serializable {
     Double weight;
     Species species;
     Adopter adopter;
+    Status status;
 
     public PetDTO(Pet obj) {
         id = obj.getId();
@@ -32,6 +34,7 @@ public class PetDTO implements Serializable {
         weight = obj.getWeight();
         species = obj.getSpecies();
         adopter = obj.getAdopter();
+        status = obj.getStatus();
     }
 
 }

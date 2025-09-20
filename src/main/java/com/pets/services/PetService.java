@@ -65,6 +65,7 @@ public class PetService {
                 objDto.getAge(),
                 objDto.getWeight(),
                 objDto.getSpecies(),
+                objDto.getStatus(),
                 objDto.getAdopter());
     }
 

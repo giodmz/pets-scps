@@ -26,9 +26,7 @@ public class Adopter {
     @ManyToOne
     Address address;
 
-    @OneToMany(mappedBy = "adopter",
-            cascade = {CascadeType.MERGE, CascadeType.REMOVE},
-            orphanRemoval = true)
+    @OneToMany(mappedBy = "adopter", fetch = FetchType.LAZY)
     private List<Pet> pets;
 
     @Override
