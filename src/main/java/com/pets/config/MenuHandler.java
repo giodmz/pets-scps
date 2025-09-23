@@ -29,11 +29,12 @@ public class MenuHandler {
     @Autowired
     private final PetMenuHandler petMenuHandler;
 
-    public MenuHandler(PetMenuHandler petMenuHandler) {
+    public MenuHandler(PetMenuHandler petMenuHandler, Scanner sc) {
         this.petMenuHandler = petMenuHandler;
+        this.sc = sc;
     }
 
-    Scanner sc = new Scanner(System.in);
+    private final Scanner sc;
 
     public void initialMenu(){
 
@@ -42,12 +43,14 @@ public class MenuHandler {
             System.out.println("\n1 - Adopter menu");
             System.out.println("2 - Pet menu");
             int input = sc.nextInt();
+            sc.nextLine();
+
             switch (input) {
                 case 1:
-                    petMenuHandler.petMainMenu();
+                    adopterMainMenu();
                     break;
                 case 2:
-                    adopterMainMenu();
+                    petMenuHandler.petMainMenu();
                     break;
 
             }

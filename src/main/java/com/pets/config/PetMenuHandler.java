@@ -16,7 +16,13 @@ import java.util.*;
 @Component
 public class PetMenuHandler {
 
-    Scanner sc = new Scanner(System.in);
+
+    @Autowired
+    public PetMenuHandler(Scanner sc) {
+        this.sc = sc;
+    }
+
+    private final Scanner sc;
 
     @Autowired
     private PetRepository petRepository;
@@ -35,6 +41,7 @@ public class PetMenuHandler {
             System.out.println("5 - Find pet by name");
             System.out.println("6 - Exit");
             int input = sc.nextInt();
+            sc.nextLine();
 
             switch (input) {
                 case 1:
@@ -63,6 +70,7 @@ public class PetMenuHandler {
                 throw new InputException("Please insert a valid number.");
             }
 
+
         } catch (InputMismatchException ex) {
             System.out.println("\nInvalid format, please use only numbers to navigate.");
             petMainMenu();
@@ -76,7 +84,6 @@ public class PetMenuHandler {
 
     public void registerPetMenu() {
         try {
-
             System.out.println("Please, insert the pet data:");
             System.out.println("Name:");
             String name = sc.nextLine();
