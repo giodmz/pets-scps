@@ -1,63 +1,64 @@
-package com.pets.config;
+package com.pets.config.menu;
 
 import com.pets.entities.Address;
-import com.pets.entities.Pet;
-import com.pets.enums.Gender;
-import com.pets.enums.Species;
+import com.pets.entities.Adopter;
 import com.pets.exceptions.InputException;
 import com.pets.exceptions.ObjectNotFoundException;
-import com.pets.repository.PetRepository;
-import com.pets.services.PetService;
+import com.pets.repository.AddressRepository;
+import com.pets.repository.AdopterRepository;
+import com.pets.services.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
-public class PetMenuHandler {
-
+public class AdopterMenuHandler {
 
     @Autowired
-    public PetMenuHandler(Scanner sc) {
+    public AdopterMenuHandler(Scanner sc) {
         this.sc = sc;
     }
 
     private final Scanner sc;
 
     @Autowired
-    private PetRepository petRepository;
+    private AdopterRepository adopterRepository;
 
     @Autowired
-    private PetService petService;
+    private AdopterService adopterService;
 
-    public void petMainMenu() {
+    @Autowired
+    private AddressRepository addressRepository;
+
+    public void adopterMainMenu() {
 
         Locale.setDefault(Locale.US);
         try {
-            System.out.println("\n1 - Register a new pet");
-            System.out.println("2 - Change pet data");
-            System.out.println("3 - Delete a pet from database");
-            System.out.println("4 - List all registered pets");
-            System.out.println("5 - Find pet by name");
+            System.out.println("\n1 - Register a new adopter");
+            System.out.println("2 - Change adopter data");
+            System.out.println("3 - Delete a adopter from database");
+            System.out.println("4 - List all registered adopters");
+            System.out.println("5 - Find adopter by name");
             System.out.println("6 - Exit");
             int input = sc.nextInt();
             sc.nextLine();
 
             switch (input) {
                 case 1:
-                    registerPetMenu();
+                    registerAdopterMenu();
                     break;
                 case 2:
-                    modifyPetDataMenu();
+                    modifyAdopterDataMenu();
                     break;
                 case 3:
-                    deletePetMenu();
+                    deleteAdopterMenu();
                     break;
                 case 4:
-                    listAllPetsMenu();
+                    listAllAdoptersMenu();
                     break;
                 case 5:
-                    findPetByNameMenu();
+                    findAdopterByNameMenu();
                     break;
                 case 6:
                     System.out.println("\nAté logo...");
@@ -73,126 +74,102 @@ public class PetMenuHandler {
 
         } catch (InputMismatchException ex) {
             System.out.println("\nInvalid format, please use only numbers to navigate.");
-            petMainMenu();
+            adopterMainMenu();
         } catch (InputException ex) {
             System.out.println("\nError: " + ex.getMessage());
-            petMainMenu();
+            adopterMainMenu();
         }
 
     }
 
-
-    public void registerPetMenu() {
+    public void registerAdopterMenu() {
         try {
-            System.out.println("Please, insert the pet data:");
+            System.out.println("Please, insert the adopter data:");
             System.out.println("Name:");
             String name = sc.nextLine();
 
-            if (name.isEmpty()) {
-                name = "NO_INFO";
-            }
-
-            if (name.trim().split("\\s+").length < 2) {
+            if (name == null || name.trim().isEmpty()
+                    || name.trim().split("\\s+").length < 2) {
                 throw new InputException("Please insert first and last name.");
             }
+
             if (!name.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
                 throw new InputException("The name can't have numbers or special characters");
             }
 
-            System.out.println("Species:");
-            String inputSpecies = sc.nextLine();
+            System.out.println("E-mail:");
+            String email = sc.nextLine();
 
-            System.out.println("Gender");
-            String inputSex = sc.nextLine();
+            System.out.println("Phone number:");
+            String contact = sc.nextLine();
 
-            System.out.println("Age:");
-            Integer age = sc.nextInt();
-
-            System.out.println("Weight:");
-            Double weight = sc.nextDouble();
-            sc.nextLine();
-
-            System.out.println("Address:");
-            System.out.print("House number: ");
-            Integer num = sc.nextInt();
-            sc.nextLine();
             System.out.print("City: ");
             String city = sc.nextLine();
-
             System.out.print("Street: ");
             String street = sc.nextLine();
+            System.out.print("Number: ");
+            Integer num = sc.nextInt();
+            sc.nextLine();
 
             Address address = Address.builder()
-                    .num(num)
                     .city(city)
                     .street(street)
+                    .num(num)
                     .build();
-//            addressRepository.save(address);
 
-
-            if (age >= 22) {
-                throw new InputException("Please, insert a valid age (under 22)");
-            }
-
-            if (!inputSpecies.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
-                throw new InputException("The name can't contain numbers or special characters");
-            }
-
-            Species specie = Species.valueOf(inputSpecies.toUpperCase());
-            Gender sex = Gender.valueOf(inputSex.toUpperCase());
-
-            Pet pet = Pet.builder()
+            Adopter adopter = Adopter.builder()
                     .name(name)
-                    .gender(sex)
-                    .age(age)
-                    .weight(weight)
-                    .species(specie)
-                    .adopter(null)
+                    .email(email)
+                    .contact(contact)
+                    .address(address)
+                    .pets(null)
                     .build();
-            petService.insert(pet);
 
-            System.out.println("Your pet is successful registered: " + pet.toString());
+            addressRepository.save(address);
+            adopterService.insert(adopter);
+
+            System.out.println("You have been successfully registered: " + adopter.toString());
 
 
         } catch (InputException ex) {
-            ex.getMessage();
+            System.out.println("Error: " + ex.getMessage());
         }
 
-        returnToPetMainMenu();
+        returnToAdopterMainMenu();
 
     }
 
-    public void listAllPetsMenu() {
+    public void listAllAdoptersMenu() {
         try {
-            List<Pet> pets = petService.findAll();
+            List<Adopter> adopters = adopterService.findAll();
 
-            System.out.println("Pets found on database: ");
-            for (Pet pet : pets) {
+            System.out.println("Adopters found on database: ");
+            for (Adopter adopter : adopters) {
 
-                System.out.println(pet.toString());
+                System.out.println(adopter.toString());
             }
 
         } catch (ObjectNotFoundException ex) {
             System.out.println("Error: " + ex.getMessage());
-            petMainMenu();
+            adopterMainMenu();
         }
 
-        returnToPetMainMenu();
+        returnToAdopterMainMenu();
 
     }
 
-    public  void deletePetMenu(){
-        findPetByName();
+    public  void deleteAdopterMenu(){
+        findAdopterByName();
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Insert the pet ID you want to delete from database: ");
+        System.out.print("Insert the adopter ID you want to delete from database: ");
         Integer id = sc.nextInt();
         sc.nextLine();
 
 
         try {
-            Pet pet = petService.findById(id);
-            System.out.println("Type DELETE to confirm that" + pet.getName() + " will be deleted FOREVER");
+            Adopter adopter = adopterService.findById(id);
+            System.out.println("Type DELETE to confirm that" + adopter.getName() + " will be deleted FOREVER");
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid ID");
         } catch (ObjectNotFoundException e) {
@@ -203,43 +180,43 @@ public class PetMenuHandler {
         String confirmation = sc.nextLine();
         if (confirmation.equalsIgnoreCase("DELETE")) {
             try {
-                petService.delete(id);
+                adopterService.delete(id);
             } catch (ObjectNotFoundException ex) {
                 ex.getMessage();
-                returnToPetMainMenu();
+                returnToAdopterMainMenu();
             }
 
             System.out.println("Successfully deleted.");
-            returnToPetMainMenu();
+            returnToAdopterMainMenu();
         } else {
             System.out.println("Deleting process canceled.");
-            returnToPetMainMenu();
+            returnToAdopterMainMenu();
         }
 
     }
 
-    public void findPetByNameMenu() {
-        findPetByName();
+    public void findAdopterByNameMenu() {
+        findAdopterByName();
     }
 
-    public  void modifyPetDataMenu() {
-        findPetByName();
+    public  void modifyAdopterDataMenu() {
+        findAdopterByName();
 
         Scanner sc = new Scanner(System.in);
-        System.out.print("Insert the pet ID you want to change data: ");
+        System.out.print("Insert the adopter ID you want to change data: ");
         Integer id = sc.nextInt();
         sc.nextLine();
 
-        Pet pet = petService.findById(id);
-        if (pet == null) {
-            System.out.println("Pet not found!");
+        Adopter adopter = adopterService.findById(id);
+        if (adopter == null) {
+            System.out.println("Adopter not found!");
             return;
         }
 
         System.out.println("\nWhat do you want to change?");
         System.out.println("1 - Name");
-        System.out.println("2 - Age");
-        System.out.println("3 - Weight");
+        System.out.println("2 - E-mail");
+        System.out.println("3 - Contact");
         System.out.println("4 - Address");
         System.out.println("0 - Exit");
 
@@ -250,17 +227,17 @@ public class PetMenuHandler {
             case 1:
                 System.out.print("New name: ");
                 String name = sc.nextLine();
-                pet.setName(name);
+                adopter.setName(name);
                 break;
             case 2:
-                System.out.print("New age: ");
-                int age = sc.nextInt();
-                pet.setAge(age);
+                System.out.print("New e-mail: ");
+                String email = sc.nextLine();
+                adopter.setEmail(email);
                 break;
             case 3:
-                System.out.print("New weight: ");
-                double weight = sc.nextDouble();
-                pet.setWeight(weight);
+                System.out.print("New contact: ");
+                String contact = sc.nextLine();
+                adopter.setContact(contact);
                 break;
             case 4:
                 System.out.print("New city: ");
@@ -274,8 +251,8 @@ public class PetMenuHandler {
                         .street(street)
                         .num(num)
                         .build();
-//                addressRepository.save(newAddress);
-//                pet.setAddress(newAddress);
+                addressRepository.save(newAddress);
+                adopter.setAddress(newAddress);
                 break;
             case 0:
                 System.out.println("Exiting...");
@@ -285,26 +262,26 @@ public class PetMenuHandler {
                 return;
         }
 
-        petService.update(pet);
-        System.out.println("Pet data updated successfully.");
+        adopterService.update(adopter);
+        System.out.println("Adopter data updated successfully.");
 
-        returnToPetMainMenu();
+        returnToAdopterMainMenu();
     }
 
-    public void findPetByName() {
+    public void findAdopterByName() {
         try {
             Scanner sc = new Scanner(System.in);
 
-            System.out.println("Insert your pet name: ");
+            System.out.println("Insert your adopter name: ");
             String name = sc.nextLine();
-            List<Pet> pets = petService.findByNameLike(name);
-            if (pets.isEmpty()) {
+            List<Adopter> adopters = adopterService.findByNameLike(name);
+            if (adopters.isEmpty()) {
                 System.out.println("\nNo data found on database");
-                returnToPetMainMenu();
+                returnToAdopterMainMenu();
             }
-            System.out.println("\nPets with that name found on database: ");
-            for (Pet pet : pets) {
-                System.out.println(pet.toString());
+            System.out.println("\nAdopters with that name found on database: ");
+            for (Adopter adopter : adopters) {
+                System.out.println(adopter.toString());
             }
 
 
@@ -314,11 +291,11 @@ public class PetMenuHandler {
 
     }
 
-    public void returnToPetMainMenu() {
+    public void returnToAdopterMainMenu() {
         System.out.println("\nDo you want to return to main menu? (y/n)");
         String input = sc.next();
         if (Objects.equals(input, "y")) {
-            petMainMenu();
+            adopterMainMenu();
         } else {
             System.out.println("See u... :)");
             sc.close();

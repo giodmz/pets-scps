@@ -1,7 +1,6 @@
 package com;
 
-//import com.pets.config.MenuHandler;
-import com.pets.config.MenuHandler;
+import com.pets.config.menu.MenuHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

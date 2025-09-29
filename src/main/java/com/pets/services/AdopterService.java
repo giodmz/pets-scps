@@ -3,6 +3,7 @@ package com.pets.services;
 
 import com.pets.dto.AdopterDTO;
 import com.pets.entities.Adopter;
+import com.pets.entities.Pet;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
 import com.sun.jdi.ObjectCollectedException;
@@ -62,6 +63,10 @@ public class AdopterService {
                 objDto.getContact(),
                 objDto.getAddress(),
                 objDto.getPets());
+    }
+
+    public List<Adopter> findByNameLike(String name){
+        return  rep.findByNameLike(name);
     }
 
     private void requiredValidId(Integer id){
