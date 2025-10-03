@@ -44,16 +44,21 @@ public class MenuHandler {
 
         try {
             System.out.println("Adoption System");
-            System.out.println("\n1 - Adopter menu");
-            System.out.println("2 - Pet menu");
+            System.out.println("\n1 - Adopt a pet");
+            System.out.println("----------------------------");
+            System.out.println("\n2 - Adopter menu (info)");
+            System.out.println("3 - Pet menu (info)");
             int input = sc.nextInt();
             sc.nextLine();
 
             switch (input) {
                 case 1:
-                    adopterMenuHandler.adopterMainMenu();
+
                     break;
                 case 2:
+                    adopterMenuHandler.adopterMainMenu();
+                    break;
+                case 3:
                     petMenuHandler.petMainMenu();
                     break;
 

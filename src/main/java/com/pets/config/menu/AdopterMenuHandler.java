@@ -82,6 +82,10 @@ public class AdopterMenuHandler {
 
     }
 
+    public void adoptPetMenu(){
+
+    }
+
     public void registerAdopterMenu() {
         try {
             System.out.println("Please, insert the adopter data:");

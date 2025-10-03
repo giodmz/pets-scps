@@ -4,6 +4,7 @@ package com.pets.services;
 import com.pets.dto.AdopterDTO;
 import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
+import com.pets.enums.Status;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
 import com.sun.jdi.ObjectCollectedException;
@@ -74,4 +75,5 @@ public class AdopterService {
             throw new IllegalArgumentException("Invalid id");
         }
     }
+
 }

@@ -1,7 +1,9 @@
 package com.pets.services;
 
 import com.pets.dto.PetDTO;
+import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
+import com.pets.enums.Status;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
 import com.sun.jdi.ObjectCollectedException;
@@ -73,6 +75,15 @@ public class PetService {
         if (id <= 0){
             throw new IllegalArgumentException("Invalid id");
         }
+    }
+
+    private void adoptionProcess(Pet pet, Adopter adopter) {
+        pet.setAdopter(adopter);
+        pet.setStatus(Status.ADOPTED);
+
+        rep.save(pet);
+
+        System.out.println(pet.getName() + " has been adopted by: " + adopter.getName());
     }
 
 }
