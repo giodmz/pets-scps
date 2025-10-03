@@ -2,11 +2,13 @@ package com.pets.config.menu;
 
 import com.pets.entities.Address;
 import com.pets.entities.Adopter;
+import com.pets.entities.Pet;
 import com.pets.exceptions.InputException;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AddressRepository;
 import com.pets.repository.AdopterRepository;
 import com.pets.services.AdopterService;
+import com.pets.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +32,9 @@ public class AdopterMenuHandler {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private PetService petService;
 
     public void adopterMainMenu() {
 
@@ -82,8 +87,29 @@ public class AdopterMenuHandler {
 
     }
 
-    public void adoptPetMenu(){
+    public void adoptProcessPetMenu(){
+        System.out.println("Enter your e-mail: ");
+        String email = sc.nextLine();
 
+        try {
+            Adopter adopter = adopterService.findByEmail(email);
+            System.out.println("Welcome " + adopter.getName());
+
+            System.out.println("Please, enter the pet name do you want to adopt: ");
+            String petName = sc.nextLine();
+            List<Pet> pet = petService.findByNameLike(petName);
+            System.out.println(pet.toString());
+
+            System.out.println("Enter the pet ID to adopt: ");
+            Integer petId = sc.nextInt();
+            Pet findPet = petService.findById(petId);
+
+            petService.adoptionProcess(findPet, adopter);
+
+
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void registerAdopterMenu() {

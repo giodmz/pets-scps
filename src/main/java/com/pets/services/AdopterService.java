@@ -31,6 +31,11 @@ public class AdopterService {
                 .orElseThrow(() -> new ObjectNotFoundException("Adopter not found. (Id: " + id + ")"));
     }
 
+    public Adopter findByEmail(String email) {
+        return rep.findByEmail(email)
+                .orElseThrow(() -> new ObjectNotFoundException("Adopter not found with email: " + email));
+    }
+
 
     public void insert(Adopter obj) {
         rep.save(obj);

@@ -258,8 +258,6 @@ public class PetMenuHandler {
                         .street(street)
                         .num(num)
                         .build();
-//                addressRepository.save(newAddress);
-//                pet.setAddress(newAddress);
                 break;
             case 0:
                 System.out.println("Exiting...");

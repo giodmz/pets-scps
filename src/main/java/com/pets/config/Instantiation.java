@@ -117,7 +117,7 @@ public class Instantiation implements CommandLineRunner {
 
         petRepository.save(pet);
 
-        System.out.println(pet.getName() + " foi adotado por " + adopter.getName());
+        System.out.println(pet.getName() + " - " + adopter.getName());
     }
 
     }

@@ -77,7 +77,7 @@ public class PetService {
         }
     }
 
-    private void adoptionProcess(Pet pet, Adopter adopter) {
+    public void adoptionProcess(Pet pet, Adopter adopter) {
         pet.setAdopter(adopter);
         pet.setStatus(Status.ADOPTED);
 
