@@ -84,6 +84,26 @@ public class Instantiation implements CommandLineRunner {
                     .adopter(null)
                     .build();
 
+        Pet pet4 = Pet.builder()
+                .name("Arthas")
+                .gender(Gender.MALE)
+                .age(10)
+                .weight(13.0)
+                .species(Species.CAT)
+                .status(Status.AVAILABLE)
+                .adopter(null)
+                .build();
+
+        Pet pet5 = Pet.builder()
+                .name("Geralt")
+                .gender(Gender.MALE)
+                .age(11)
+                .weight(20.0)
+                .species(Species.DOG)
+                .status(Status.AVAILABLE)
+                .adopter(null)
+                .build();
+
             Adopter adopter1 = Adopter.builder()
                     .name("Thrall")
                     .email("thrall@gmail.com")
@@ -100,7 +120,7 @@ public class Instantiation implements CommandLineRunner {
                     .pets(new ArrayList<>())
                     .build();
 
-        petRepository.saveAll(Arrays.asList(pet1, pet2, pet3));
+        petRepository.saveAll(Arrays.asList(pet1, pet2, pet3, pet4, pet5));
         adopterRepository.saveAll(Arrays.asList(adopter1, adopter2));
 
         adoptionProcess(pet1, adopter1);

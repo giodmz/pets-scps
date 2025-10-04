@@ -3,6 +3,7 @@ package com.pets.config.menu;
 import com.pets.entities.Address;
 import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
+import com.pets.enums.Status;
 import com.pets.exceptions.InputException;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AddressRepository;
@@ -97,8 +98,20 @@ public class AdopterMenuHandler {
 
             System.out.println("Please, enter the pet name do you want to adopt: ");
             String petName = sc.nextLine();
-            List<Pet> pet = petService.findByNameLike(petName);
-            System.out.println(pet.toString());
+            List<Pet> availablePet = petService.findAvailableToAdoptPet(petName);
+
+            if (availablePet.isEmpty()) {
+                System.out.println("We have no pets available with this name");
+                System.out.println("\nPlease check our available pets:");
+                for (Pet pet : petService.listAvailableToAdoptPet()) {
+                    System.out.println(pet);
+                }
+
+                returnToAdopterMainMenu();
+            } else {
+                System.out.println("Available Pets:");
+                System.out.println(availablePet.toString());
+            }
 
             System.out.println("Enter the pet ID to adopt: ");
             Integer petId = sc.nextInt();

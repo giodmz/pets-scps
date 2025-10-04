@@ -35,6 +35,10 @@ public class PetService {
         return  rep.findByNameLike(name);
     }
 
+    public List<Pet> findAvailableToAdoptPet(String name) { return rep.findAvailableToAdoptPet(name); }
+
+    public List<Pet> listAvailableToAdoptPet() { return  rep.listAvailableToAdoptPet(); }
+
     public void insert(Pet obj) {
         rep.save(obj);
     }
