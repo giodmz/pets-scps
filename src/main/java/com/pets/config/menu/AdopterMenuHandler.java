@@ -11,9 +11,12 @@ import com.pets.repository.AdopterRepository;
 import com.pets.services.AdopterService;
 import com.pets.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @Component
 public class AdopterMenuHandler {
@@ -37,6 +40,10 @@ public class AdopterMenuHandler {
     @Autowired
     private PetService petService;
 
+    @Lazy
+    @Autowired
+    private MenuHandler menuHandler;
+
     public void adopterMainMenu() {
 
         Locale.setDefault(Locale.US);
@@ -46,7 +53,8 @@ public class AdopterMenuHandler {
             System.out.println("3 - Delete a adopter from database");
             System.out.println("4 - List all registered adopters");
             System.out.println("5 - Find adopter by name");
-            System.out.println("6 - Exit");
+            System.out.println("6 - Return to main menu");
+            System.out.println("7 - Exit");
             int input = sc.nextInt();
             sc.nextLine();
 
@@ -67,7 +75,9 @@ public class AdopterMenuHandler {
                     findAdopterByNameMenu();
                     break;
                 case 6:
-                    System.out.println("\nAté logo...");
+                    menuHandler.initialMenu();
+                case 7:
+                    System.out.println("\nSee u...");
                     System.exit(0);
                 default:
                     break;

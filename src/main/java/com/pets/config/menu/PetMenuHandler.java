@@ -9,6 +9,7 @@ import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
 import com.pets.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -30,6 +31,10 @@ public class PetMenuHandler {
     @Autowired
     private PetService petService;
 
+    @Lazy
+    @Autowired
+    private MenuHandler menuHandler;
+
     public void petMainMenu() {
 
         Locale.setDefault(Locale.US);
@@ -39,7 +44,8 @@ public class PetMenuHandler {
             System.out.println("3 - Delete a pet from database");
             System.out.println("4 - List all registered pets");
             System.out.println("5 - Find pet by name");
-            System.out.println("6 - Exit");
+            System.out.println("6 - Return to main menu");
+            System.out.println("7 - Exit");
             int input = sc.nextInt();
             sc.nextLine();
 
@@ -60,7 +66,9 @@ public class PetMenuHandler {
                     findPetByNameMenu();
                     break;
                 case 6:
-                    System.out.println("\nAté logo...");
+                    menuHandler.initialMenu();
+                case 7:
+                    System.out.println("\nSee u...");
                     System.exit(0);
                 default:
                     break;
