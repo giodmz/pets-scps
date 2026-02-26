@@ -1,11 +1,4 @@
-# 🐾 Pets Management API
-
-Uma aplicação em **Java + Spring Boot** para gerenciamento de pets, donos e endereços.  
-O objetivo é fornecer uma API simples para cadastro, consulta, atualização e exclusão de pets, relacionando-os com seus respectivos donos e endereços.
-
----
-
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 - Java 21
 - Spring Boot
 - Spring Data JPA
@@ -15,7 +8,7 @@ O objetivo é fornecer uma API simples para cadastro, consulta, atualização e 
 
 ---
 
-## 📌 Funcionalidades
+## Funcionalidades
 - Cadastro de pets com:
   - Nome
   - Espécie (cachorro/gato)
@@ -31,7 +24,7 @@ O objetivo é fornecer uma API simples para cadastro, consulta, atualização e 
 
 ---
 
-## 🐳 Rodando o Projeto com Docker
+## Rodando o Projeto com Docker
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seuusuario/pets-management.git
