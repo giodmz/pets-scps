@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 public class PetService {
@@ -24,12 +25,16 @@ public class PetService {
 
     public Pet findById(Integer id) {
         requiredValidId(id);
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("Invalid ID: " + id);
-        }
         return rep.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Pet not found. (Id: " + id + ")"));
+                .orElseThrow(new Supplier<ObjectNotFoundException>() {
+                    @Override
+                    public ObjectNotFoundException get() {
+                        return new ObjectNotFoundException("Pet not found. (Id: " + id + ")");
+                    }
+                });
     }
+
+
 
     public List<Pet> findByNameLike(String name){
         return  rep.findByNameLike(name);
@@ -75,9 +80,12 @@ public class PetService {
                 objDto.getAdopter());
     }
 
-    private void requiredValidId(Integer id){
-        if (id <= 0){
-            throw new IllegalArgumentException("Invalid id");
+    private void requiredValidId(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid id: " + id);
         }
     }
 
