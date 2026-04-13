@@ -1,4 +1,4 @@
-package com.pets.resources;
+package com.pets.controllers;
 
 
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/adopters")
-public class AdopterResource {
+public class AdopterController {
 
     @Autowired
     private AdopterService service;

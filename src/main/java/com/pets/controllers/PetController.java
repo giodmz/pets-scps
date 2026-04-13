@@ -1,4 +1,4 @@
-package com.pets.resources;
+package com.pets.controllers;
 
 import com.pets.dto.PetDTO;
 import com.pets.entities.Adopter;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/pets")
-public class PetResource {
+public class PetController {
 
     @Autowired
     private PetService service;

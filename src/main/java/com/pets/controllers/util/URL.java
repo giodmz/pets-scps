@@ -1,4 +1,4 @@
-package com.pets.resources.util;
+package com.pets.controllers.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

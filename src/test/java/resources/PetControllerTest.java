@@ -2,7 +2,7 @@ package resources;
 
 
 import com.pets.PetsApp;
-import com.pets.resources.PetResource;
+import com.pets.controllers.PetController;
 import com.pets.services.PetService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = PetResource.class)
+@WebMvcTest(controllers = PetController.class)
 @ContextConfiguration(classes = PetsApp.class)
-public class PetResourceTest {
+public class PetControllerTest {
 
 
     @Autowired

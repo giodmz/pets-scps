@@ -628,7 +628,7 @@ Unconditional classes:
 
 2026-04-12 22:05:51,898  INFO [main] PetResourceTest  - Started PetResourceTest in 3.678 seconds (process running for 6.0)
 2026-04-12 22:05:51,908 DEBUG [main] cache  - Spring test ApplicationContext cache statistics: [DefaultContextCache@602298b size = 1, maxSize = 32, parentContextCount = 0, hitCount = 0, missCount = 1, failureCount = 0]
-2026-04-12 22:05:51,910 DEBUG [main] DependencyInjectionTestExecutionListener  - Performing dependency injection for test class resources.PetResourceTest
+2026-04-12 22:05:51,910 DEBUG [main] DependencyInjectionTestExecutionListener  - Performing dependency injection for test class resources.PetControllerTest
 2026-04-12 22:05:51,910 DEBUG [main] cache  - Spring test ApplicationContext cache statistics: [DefaultContextCache@602298b size = 1, maxSize = 32, parentContextCount = 0, hitCount = 1, missCount = 1, failureCount = 0]
 2026-04-12 22:05:51,914 DEBUG [main] cache  - Spring test ApplicationContext cache statistics: [DefaultContextCache@602298b size = 1, maxSize = 32, parentContextCount = 0, hitCount = 2, missCount = 1, failureCount = 0]
 2026-04-12 22:05:51,920 DEBUG [main] DirtiesContextBeforeModesTestExecutionListener  - Before test method: class [PetResourceTest], method [insertReturn400WhenWeightIsNegative], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null]
