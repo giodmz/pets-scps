@@ -47,7 +47,7 @@ public class PetResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody PetDTO objDto){
+    public ResponseEntity<Void> insert(@Valid @RequestBody PetDTO objDto){
         Pet obj = service.fromDTO(objDto);
         obj = service.update(obj);
 

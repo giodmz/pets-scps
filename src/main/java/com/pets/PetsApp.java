@@ -1,4 +1,4 @@
-package com;
+package com.pets;
 
 import com.pets.config.menu.MenuHandler;
 import org.springframework.boot.SpringApplication;

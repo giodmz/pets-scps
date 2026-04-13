@@ -1,4 +1,8 @@
 import com.pets.entities.Pet;
+import com.pets.enums.Gender;
+import com.pets.enums.Species;
+import com.pets.enums.Status;
+import com.pets.exceptions.InputException;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
 import com.pets.services.PetService;
@@ -44,4 +48,19 @@ class PetServiceTest {
 
         assertThrows(ObjectNotFoundException.class, () -> service.findById(99));
     }
+
+    @Test
+    public void validWeightPet(){
+        Pet pet = Pet.builder()
+                .name("WeightCat")
+                .gender(Gender.MALE)
+                .age(11)
+                .weight(-20.0)
+                .species(Species.DOG)
+                .status(Status.AVAILABLE)
+                .adopter(null)
+                .build();
+    }
+
+
 }
