@@ -4,6 +4,7 @@ import com.pets.dto.PetDTO;
 import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
 import com.pets.services.PetService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class PetResource {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody PetDTO objDto, @PathVariable Integer id){
+    public ResponseEntity<Void> update(@Valid @RequestBody PetDTO objDto, @PathVariable Integer id){
         Pet obj = service.fromDTO(objDto);
         obj.setId(id);
         obj = service.update(obj);
@@ -46,7 +47,7 @@ public class PetResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> update(@RequestBody PetDTO objDto){
+    public ResponseEntity<Void> insert(@RequestBody PetDTO objDto){
         Pet obj = service.fromDTO(objDto);
         obj = service.update(obj);
 
