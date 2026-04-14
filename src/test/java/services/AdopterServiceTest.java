@@ -1,10 +1,11 @@
+package services;
+
+import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
-import com.pets.enums.Gender;
-import com.pets.enums.Species;
-import com.pets.enums.Status;
-import com.pets.exceptions.InputException;
 import com.pets.exceptions.ObjectNotFoundException;
+import com.pets.repository.AdopterRepository;
 import com.pets.repository.PetRepository;
+import com.pets.services.AdopterService;
 import com.pets.services.PetService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,22 +20,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class PetServiceTest {
-
+public class AdopterServiceTest {
     @Mock
-    private PetRepository rep;
+    private AdopterRepository rep;
 
     @InjectMocks
-    private PetService service;
+    private AdopterService service;
 
     @Test
     void findByIdReturnPetWhenIdIsValid() {
-        Pet pet = Pet.builder().id(1).name("Astarion").build();
-        when(rep.findById(1)).thenReturn(Optional.of(pet));
+        Adopter adopter = Adopter.builder().id(1).name("Geraldo Costa").build();
+        when(rep.findById(1)).thenReturn(Optional.of(adopter));
 
-        Pet resultado = service.findById(1);
+        Adopter resultado = service.findById(1);
 
-        assertThat(resultado.getName()).isEqualTo("Astarion");
+        assertThat(resultado.getName()).isEqualTo("Geraldo Costa");
     }
 
     @Test

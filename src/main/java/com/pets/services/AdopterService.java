@@ -3,8 +3,6 @@ package com.pets.services;
 
 import com.pets.dto.AdopterDTO;
 import com.pets.entities.Adopter;
-import com.pets.entities.Pet;
-import com.pets.enums.Status;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
 import com.sun.jdi.ObjectCollectedException;
@@ -12,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 public class AdopterService {
@@ -24,11 +23,13 @@ public class AdopterService {
 
     public Adopter findById(Integer id) {
         requiredValidId(id);
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("Invalid ID: " + id);
-        }
         return rep.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Adopter not found. (Id: " + id + ")"));
+                .orElseThrow(new Supplier<ObjectNotFoundException>() {
+                    @Override
+                    public ObjectNotFoundException get() {
+                        return new ObjectNotFoundException("Adopter not found. (Id: " + id + ")");
+                    }
+                });
     }
 
     public Adopter findByEmail(String email) {
@@ -75,9 +76,12 @@ public class AdopterService {
         return  rep.findByNameLike(name);
     }
 
-    private void requiredValidId(Integer id){
-        if (id <= 0){
-            throw new IllegalArgumentException("Invalid id");
+    private void requiredValidId(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid id: " + id);
         }
     }
 
