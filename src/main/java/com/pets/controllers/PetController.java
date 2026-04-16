@@ -71,12 +71,24 @@ public class PetController {
         return ResponseEntity.ok().body(Collections.singletonList(obj.getAdopter()));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<PetDTO>> search(@RequestParam String name) {
-//        List<Pet> obj = service.findByNameLike(name);
-//        return ResponseEntity.ok().body();
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<List<PetDTO>> search(@RequestParam String name) {
+        List<Pet> pets = service.findByNameLike(name);
 
-//    @GetMapping("/available")
-//    public ResponseEntity<List<PetDTO>> listAvailable() { ... }
+        List<PetDTO> dtoPet = pets.stream()
+                .map(PetDTO::new)
+                .toList();
+
+        return ResponseEntity.ok().body(dtoPet);
+    }
+
+    @GetMapping("/available")
+    public ResponseEntity<List<PetDTO>> listAvailable() {
+        List<Pet> pets = service.listAvailableToAdoptPet();
+
+        List<PetDTO> dtoPet = pets.stream()
+                .map(PetDTO::new)
+                .toList();
+        return ResponseEntity.ok().body(dtoPet);
+    }
 }

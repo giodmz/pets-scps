@@ -1,8 +1,11 @@
 package resources;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pets.PetsApp;
 import com.pets.controllers.PetController;
+import com.pets.dto.PetDTO;
+import com.pets.entities.Pet;
 import com.pets.services.PetService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
