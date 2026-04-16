@@ -41,7 +41,7 @@ public class PetController {
     public ResponseEntity<Void> update(@Valid @RequestBody PetDTO objDto, @PathVariable Integer id){
         Pet obj = service.fromDTO(objDto);
         obj.setId(id);
-        obj = service.update(obj);
+        service.update(obj);
 
         return ResponseEntity.noContent().build();
     }
@@ -49,7 +49,7 @@ public class PetController {
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody PetDTO objDto){
         Pet obj = service.fromDTO(objDto);
-        obj = service.update(obj);
+        service.insert(obj);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

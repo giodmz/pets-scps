@@ -51,7 +51,7 @@ public class AdopterController {
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody AdopterDTO objDto){
         Adopter obj = service.fromDTO(objDto);
-        obj = service.update(obj);
+        service.insert(obj);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
