@@ -7,6 +7,7 @@ import com.pets.enums.Status;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
 import com.sun.jdi.ObjectCollectedException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,15 +49,16 @@ public class PetService {
         rep.save(obj);
     }
 
+    @Transactional
     public void delete(Integer id){
         requiredValidId(id);
-        rep.findById(id).orElseThrow(ObjectCollectedException::new);
+        rep.findById(id).orElseThrow(() -> new ObjectNotFoundException("Invalid ID: " + id));
         rep.deleteById(id);
     }
 
     public Pet update(Pet obj) {
         requiredValidId(obj.getId());
-        Pet newObj = rep.findById(obj.getId()).orElseThrow(ObjectCollectedException::new);
+        Pet newObj = rep.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Pet not found: " + obj.getId()));
         updateData(newObj, obj);
         return rep.save(newObj);
     }

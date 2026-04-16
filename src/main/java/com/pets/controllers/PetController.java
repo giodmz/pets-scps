@@ -70,4 +70,13 @@ public class PetController {
         Pet obj = service.findById(id);
         return ResponseEntity.ok().body(Collections.singletonList(obj.getAdopter()));
     }
+
+//    @GetMapping("/search")
+//    public ResponseEntity<List<PetDTO>> search(@RequestParam String name) {
+//        List<Pet> obj = service.findByNameLike(name);
+//        return ResponseEntity.ok().body();
+//    }
+
+//    @GetMapping("/available")
+//    public ResponseEntity<List<PetDTO>> listAvailable() { ... }
 }

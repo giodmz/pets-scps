@@ -26,6 +26,7 @@ public class Adopter {
     @ManyToOne
     Address address;
 
+    @Builder.Default
     @OneToMany(mappedBy = "adopter", fetch = FetchType.LAZY)
     private List<Pet> pets;
 

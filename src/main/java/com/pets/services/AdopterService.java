@@ -6,6 +6,7 @@ import com.pets.entities.Adopter;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
 import com.sun.jdi.ObjectCollectedException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,15 +43,16 @@ public class AdopterService {
         rep.save(obj);
     }
 
+    @Transactional
     public void delete(Integer id){
         requiredValidId(id);
-        rep.findById(id).orElseThrow(ObjectCollectedException::new);
+        rep.findById(id).orElseThrow(() -> new ObjectNotFoundException("Invalid ID: " + id));
         rep.deleteById(id);
     }
 
     public Adopter update(Adopter obj) {
         requiredValidId(obj.getId());
-        Adopter newObj = rep.findById(obj.getId()).orElseThrow(ObjectCollectedException::new);
+        Adopter newObj = rep.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Adopter not found: " + obj.getId()));
         updateData(newObj, obj);
         return rep.save(newObj);
     }
