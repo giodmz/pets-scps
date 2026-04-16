@@ -28,7 +28,7 @@ public class Adopter {
 
     @Builder.Default
     @OneToMany(mappedBy = "adopter", fetch = FetchType.LAZY)
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     @Override
     public String toString() {

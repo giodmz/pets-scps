@@ -14,7 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,6 +35,9 @@ public class PetControllerTest {
 
     @MockitoBean
     private PetService petService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /* o corpo do request http que você vai enviar.
     é exatamente o que um cliente mandaria para a API. */
@@ -54,6 +64,38 @@ public class PetControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldReturnPetsByName() throws Exception {
+        Pet pet = new Pet();
+        pet.setName("Shadowheart");  // nome consistente com o que foi buscado
+
+        when(petService.findByNameLike("Shadowheart"))
+                .thenReturn(List.of(pet));
+
+        List<PetDTO> expected = List.of(new PetDTO(pet));
+        String expectedJson = objectMapper.writeValueAsString(expected);
+
+        mockMvc.perform(get("/pets/search")
+                        .param("name", "Shadowheart"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    void shouldReturnAvailablePets() throws Exception {
+        Pet pet = new Pet();
+        pet.setName("Bolt");
+
+        when(petService.listAvailableToAdoptPet())
+                .thenReturn(List.of(pet));
+
+        List<PetDTO> expected = List.of(new PetDTO(pet));
+
+        mockMvc.perform(get("/pets/available"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     }
 
 }
