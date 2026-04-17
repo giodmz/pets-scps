@@ -9,6 +9,8 @@ import com.pets.repository.PetRepository;
 import com.sun.jdi.ObjectCollectedException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +22,14 @@ public class PetService {
     @Autowired
     private PetRepository rep;
 
+    // mantive isso por causa do menu no console
     public List<Pet> findAll() {
         return rep.findAll();
+    }
+
+    // paginação
+    public Page<Pet> findAll(Pageable pageable) {
+        return rep.findAll(pageable);
     }
 
     public Pet findById(Integer id) {

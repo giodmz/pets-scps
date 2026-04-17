@@ -9,15 +9,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import org.springframework.data.domain.Pageable;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping(value="/pets")
@@ -30,11 +33,9 @@ public class PetController {
     @Operation(summary = "List all pets")
     @ApiResponse(responseCode = "200", description = "List was successfully retrieved")
     @GetMapping
-    public ResponseEntity<List<PetDTO>> findAll() {
-        List<Pet> list = service.findAll();
-        // Pet -> PetDTO
-        List<PetDTO> listDto = list.stream().map(PetDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+    public ResponseEntity<Page<PetDTO>> findAll(@ParameterObject Pageable pageable) {
+        Page<PetDTO> page = service.findAll(pageable).map(PetDTO::new);
+        return ResponseEntity.ok(page);
     }
 
     @Operation(summary = "Find by ID")
