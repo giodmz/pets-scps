@@ -3,16 +3,15 @@ package com.pets.controllers;
 
 
 import com.pets.dto.AdopterDTO;
-import com.pets.dto.PetDTO;
 import com.pets.entities.Address;
 import com.pets.entities.Adopter;
-import com.pets.entities.Pet;
 import com.pets.services.AdopterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,10 +27,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value="/adopters")
 @Tag(name = "Adopters", description = "Registered adopters management")
+@RequiredArgsConstructor
 public class AdopterController {
 
-    @Autowired
-    private AdopterService service;
+    private final AdopterService service;
 
     @Operation(summary = "List all adopters")
     @ApiResponse(responseCode = "200", description = "List was successfully retrieved")

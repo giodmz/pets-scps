@@ -7,6 +7,7 @@ import com.pets.enums.Status;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Service
+@RequiredArgsConstructor
 public class PetService {
 
-    @Autowired
-    private PetRepository rep;
+    private final PetRepository rep;
 
     // mantive isso por causa do menu no console
     public List<Pet> findAll() {
@@ -31,6 +32,7 @@ public class PetService {
         return rep.findAll(pageable);
     }
 
+    @Transactional
     public Pet findById(Integer id) {
         requiredValidId(id);
         return rep.findById(id)
@@ -63,6 +65,7 @@ public class PetService {
         rep.deleteById(id);
     }
 
+    @Transactional
     public Pet update(Pet obj) {
         requiredValidId(obj.getId());
         Pet newObj = rep.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Pet not found: " + obj.getId()));
@@ -98,6 +101,7 @@ public class PetService {
         }
     }
 
+    @Transactional
     public void adoptionProcess(Pet pet, Adopter adopter) {
         pet.setAdopter(adopter);
         pet.setStatus(Status.ADOPTED);

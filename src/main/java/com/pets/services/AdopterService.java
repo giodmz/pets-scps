@@ -3,11 +3,10 @@ package com.pets.services;
 
 import com.pets.dto.AdopterDTO;
 import com.pets.entities.Adopter;
-import com.pets.entities.Pet;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
-import com.sun.jdi.ObjectCollectedException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +16,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Service
+@RequiredArgsConstructor
 public class AdopterService {
 
-    @Autowired
-    private AdopterRepository rep;
+    private final AdopterRepository rep;
 
     public List<Adopter> findAll() {
         return rep.findAll();
@@ -30,6 +29,7 @@ public class AdopterService {
         return rep.findAll(pageable);
     }
 
+    @Transactional
     public Adopter findById(Integer id) {
         requiredValidId(id);
         return rep.findById(id)
@@ -58,6 +58,7 @@ public class AdopterService {
         rep.deleteById(id);
     }
 
+    @Transactional
     public Adopter update(Adopter obj) {
         requiredValidId(obj.getId());
         Adopter newObj = rep.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Adopter not found: " + obj.getId()));
