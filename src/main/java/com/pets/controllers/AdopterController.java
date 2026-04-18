@@ -3,15 +3,20 @@ package com.pets.controllers;
 
 
 import com.pets.dto.AdopterDTO;
+import com.pets.dto.PetDTO;
 import com.pets.entities.Address;
 import com.pets.entities.Adopter;
+import com.pets.entities.Pet;
 import com.pets.services.AdopterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,7 +24,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/adopters")
@@ -32,11 +36,9 @@ public class AdopterController {
     @Operation(summary = "List all adopters")
     @ApiResponse(responseCode = "200", description = "List was successfully retrieved")
     @GetMapping
-    public ResponseEntity<List<AdopterDTO>> findAll() {
-        List<Adopter> list = service.findAll();
-        // Adopter -> AdopterDTO
-        List<AdopterDTO> listDto = list.stream().map(AdopterDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+    public ResponseEntity<Page<AdopterDTO>> findAll(@ParameterObject Pageable pageable) {
+        Page<AdopterDTO> page = service.findAllPageable(pageable).map(AdopterDTO::new);
+        return ResponseEntity.ok(page);
     }
 
     @Operation(summary = "Find by ID")

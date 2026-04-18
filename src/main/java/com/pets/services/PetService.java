@@ -6,7 +6,6 @@ import com.pets.entities.Pet;
 import com.pets.enums.Status;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.PetRepository;
-import com.sun.jdi.ObjectCollectedException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +27,7 @@ public class PetService {
     }
 
     // paginação
-    public Page<Pet> findAll(Pageable pageable) {
+    public Page<Pet> findAllPageable(Pageable pageable) {
         return rep.findAll(pageable);
     }
 

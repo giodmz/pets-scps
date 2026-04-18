@@ -3,11 +3,14 @@ package com.pets.services;
 
 import com.pets.dto.AdopterDTO;
 import com.pets.entities.Adopter;
+import com.pets.entities.Pet;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AdopterRepository;
 import com.sun.jdi.ObjectCollectedException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +18,16 @@ import java.util.function.Supplier;
 
 @Service
 public class AdopterService {
+
     @Autowired
     private AdopterRepository rep;
 
     public List<Adopter> findAll() {
         return rep.findAll();
+    }
+
+    public Page<Adopter> findAllPageable(Pageable pageable) {
+        return rep.findAll(pageable);
     }
 
     public Adopter findById(Integer id) {

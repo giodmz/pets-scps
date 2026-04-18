@@ -34,7 +34,7 @@ public class PetController {
     @ApiResponse(responseCode = "200", description = "List was successfully retrieved")
     @GetMapping
     public ResponseEntity<Page<PetDTO>> findAll(@ParameterObject Pageable pageable) {
-        Page<PetDTO> page = service.findAll(pageable).map(PetDTO::new);
+        Page<PetDTO> page = service.findAllPageable(pageable).map(PetDTO::new);
         return ResponseEntity.ok(page);
     }
 
