@@ -137,4 +137,13 @@ public class PetController {
                 .toList();
         return ResponseEntity.ok().body(dtoPet);
     }
+
+    @PostMapping("/{petId}/adopt/{adopterId}")
+    public ResponseEntity<Void> adoptById(@PathVariable Integer petId, @PathVariable Integer adopterId) {
+        Pet pet = service.findById(petId);
+        Adopter adopter = adopterService.findById(adopterId);
+        service.adoptionProcess(pet, adopter);
+        return ResponseEntity.noContent().build();
+    }
+
 }
