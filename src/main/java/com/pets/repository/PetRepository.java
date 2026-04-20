@@ -1,7 +1,6 @@
 package com.pets.repository;
 
 import com.pets.entities.Pet;
-import com.pets.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
