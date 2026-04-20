@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/adopters")
@@ -103,6 +104,13 @@ public class AdopterController {
     public ResponseEntity<List<Address>> findAdopter(@PathVariable Integer id){
         Adopter obj = service.findById(id);
         return ResponseEntity.ok().body(Collections.singletonList(obj.getAddress()));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<AdopterDTO>> findByName(@RequestParam String name) {
+        List<Adopter> list = service.findByNameLike(name);
+        List<AdopterDTO> listDto = list.stream().map(AdopterDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(listDto);
     }
 
 }

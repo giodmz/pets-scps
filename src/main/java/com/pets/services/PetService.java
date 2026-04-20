@@ -103,6 +103,9 @@ public class PetService {
 
     @Transactional
     public void adoptionProcess(Pet pet, Adopter adopter) {
+        if (pet.getStatus() == Status.ADOPTED) {
+            throw new IllegalArgumentException("Pet already adopted");
+        }
         pet.setAdopter(adopter);
         pet.setStatus(Status.ADOPTED);
 
