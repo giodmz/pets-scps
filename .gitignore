@@ -3,3 +3,4 @@ src/test/java/target/
 *.class
 .idea/
 *.iml
+application-secrets.properties
