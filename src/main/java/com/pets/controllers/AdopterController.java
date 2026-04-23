@@ -97,7 +97,7 @@ public class AdopterController {
 
     @Operation(summary = "Find a adopter address by ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Address found"),
+            @ApiResponse(responseCode = "204", description = "Adopter found"),
             @ApiResponse(responseCode = "404", description = "Invalid ID")
     })
     @GetMapping("/{id}/addresses")
@@ -106,6 +106,11 @@ public class AdopterController {
         return ResponseEntity.ok().body(Collections.singletonList(obj.getAddress()));
     }
 
+    @Operation(summary = "Find a adopter address by name")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Adopter found"),
+            @ApiResponse(responseCode = "404", description = "Adopter not found")
+    })
     @GetMapping("/search")
     public ResponseEntity<List<AdopterDTO>> findByName(@RequestParam String name) {
         List<Adopter> list = service.findByNameLike(name);
