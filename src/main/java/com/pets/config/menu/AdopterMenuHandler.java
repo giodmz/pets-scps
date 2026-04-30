@@ -3,7 +3,6 @@ package com.pets.config.menu;
 import com.pets.entities.Address;
 import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
-import com.pets.enums.Status;
 import com.pets.exceptions.InputException;
 import com.pets.exceptions.ObjectNotFoundException;
 import com.pets.repository.AddressRepository;

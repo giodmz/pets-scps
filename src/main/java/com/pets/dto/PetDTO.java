@@ -1,6 +1,5 @@
 package com.pets.dto;
 
-import com.pets.entities.Address;
 import com.pets.entities.Adopter;
 import com.pets.entities.Pet;
 import com.pets.enums.Gender;
