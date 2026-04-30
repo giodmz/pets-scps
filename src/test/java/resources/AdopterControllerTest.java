@@ -46,16 +46,16 @@ public class AdopterControllerTest {
     @Test
     void shouldReturnPetsByName() throws Exception {
         Adopter adopter = new Adopter();
-        adopter.setName("Sylvanas");
+        adopter.setName("Ronaldo Rocha");
 
-        when(service.findByNameLike("Sylvanas"))
+        when(service.findByNameLike("Ronaldo Rocha"))
                 .thenReturn(List.of(adopter));
 
         List<AdopterDTO> expected = List.of(new AdopterDTO(adopter));
         String expectedJson = objectMapper.writeValueAsString(expected);
 
         mockMvc.perform(get("/adopters/search")
-                        .param("name", "Sylvanas"))
+                        .param("name", "Ronaldo Rocha"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
     }

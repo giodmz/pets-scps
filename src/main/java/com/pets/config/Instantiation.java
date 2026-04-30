@@ -55,7 +55,7 @@ public class Instantiation implements CommandLineRunner {
             addressRepository.save(address2);
 
             Pet pet1 = Pet.builder()
-                    .name("Shadowheart")
+                    .name("Lua")
                     .gender(Gender.FEMALE)
                     .age(20)
                     .weight(30.0)
@@ -65,7 +65,7 @@ public class Instantiation implements CommandLineRunner {
                     .build();
 
             Pet pet2 = Pet.builder()
-                    .name("Lae'zel")
+                    .name("Cupcake")
                     .gender(Gender.FEMALE)
                     .age(5)
                     .weight(22.5)
@@ -75,7 +75,7 @@ public class Instantiation implements CommandLineRunner {
                     .build();
 
             Pet pet3 = Pet.builder()
-                    .name("Astarion")
+                    .name("Rex")
                     .gender(Gender.MALE)
                     .age(8)
                     .weight(15.0)
@@ -105,16 +105,16 @@ public class Instantiation implements CommandLineRunner {
                 .build();
 
             Adopter adopter1 = Adopter.builder()
-                    .name("Thrall")
-                    .email("thrall@gmail.com")
+                    .name("Ronaldo Rocha")
+                    .email("ronaldorocha@gmail.com")
                     .contact("(99)9 9999-9999")
                     .address(address1)
                     .pets(new ArrayList<>())
                     .build();
 
             Adopter adopter2 = Adopter.builder()
-                    .name("Sylvanas")
-                    .email("windrunner@gmail.com")
+                    .name("Lúcia Silva")
+                    .email("luciasilva@gmail.com")
                     .contact("(33)3 3333-3333")
                     .address(address2)
                     .pets(new ArrayList<>())
