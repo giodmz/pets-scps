@@ -32,7 +32,7 @@ public class PetController {
 
     private final PetService service;
 
-    private AdopterService adopterService;
+    private final AdopterService adopterService;
 
     @Operation(summary = "List all pets")
     @ApiResponse(responseCode = "200", description = "List was successfully retrieved")
